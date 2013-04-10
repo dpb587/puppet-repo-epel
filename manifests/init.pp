@@ -1,4 +1,4 @@
-class repo-epel::yum {
+class repo-epel {
     file {
         '/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6' :
             content => '-----BEGIN PGP PUBLIC KEY BLOCK-----
@@ -45,6 +45,9 @@ XtfLk0W5Ab9pd7tKDR6QHI7rgHXfCopRnZ2VVQ==
             enabled => '1',
             gpgcheck => '1',
             gpgkey => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6',
+            require => [
+                File['/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6'],
+            ],
             ;
         'epel-debuginfo' :
             descr => 'Extra Packages for Enterprise Linux 6 - $basearch - Debug',
@@ -54,6 +57,9 @@ XtfLk0W5Ab9pd7tKDR6QHI7rgHXfCopRnZ2VVQ==
             enabled => '0',
             gpgkey => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6',
             gpgcheck => '1',
+            require => [
+                File['/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6'],
+            ],
             ;
         'epel-source' :
             descr => 'Extra Packages for Enterprise Linux 6 - $basearch - Source',
@@ -63,12 +69,9 @@ XtfLk0W5Ab9pd7tKDR6QHI7rgHXfCopRnZ2VVQ==
             enabled => '0',
             gpgkey => 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6',
             gpgcheck => '1',
+            require => [
+                File['/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6'],
+            ],
             ;
     }
-}
-
-class {
-    'repo-epel::yum':
-        stage => 'pre-main',
-        ;
 }
